@@ -155,6 +155,21 @@ final class StudentController extends AbstractController
                 ]
             ]
         ]);
+    }
+    #[Route('/api/delete-student/{id}', name: 'delete_student', methods: ['DELETE'])]
+    public function deleteStudent(StudentRepository $studentRepository, EntityManagerInterface $entityManager, int $id): JsonResponse
+    {
+        $student = $studentRepository->find($id);
+        if(!$student) {
+            return $this->json([
+                'message' => 'Student not found',
+            ], 404);
+        }
 
+        $entityManager->remove($student);
+        $entityManager->flush();
+        return $this->json([
+            'message' => 'Student deleted successfully',
+        ], 201);
     }
 }
