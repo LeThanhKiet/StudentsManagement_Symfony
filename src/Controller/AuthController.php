@@ -163,6 +163,4 @@ final class AuthController extends AbstractController
             'message' => 'User logged out successfully',
         ]);
     }
-
-
 }
